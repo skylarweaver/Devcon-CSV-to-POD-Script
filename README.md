@@ -1,6 +1,6 @@
-# CSV to POD Script
+# Devcon CSV to POD Script
 
-A TypeScript application that converts CSV attendee data into cryptographically signed Provable Object Data (PODs) for event ticketing and verification.
+A TypeScript application that uses a CSV of attendee data to create cryptographically signed Provable Object Data (PODs) for event ticketing and verification and to redistribute to attendees.
 
 ## Overview
 
