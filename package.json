@@ -1,0 +1,21 @@
+{
+  "name": "csv-to-pod-script",
+  "version": "1.0.0",
+  "description": "Script to convert CSV attendee data to signed PODs",
+  "main": "csvToPod.js",
+  "scripts": {
+    "start": "node csvToPod.js",
+    "build": "tsc",
+    "dev": "ts-node csvToPod.ts"
+  },
+  "dependencies": {
+    "@pcd/pod": "^0.5.1",
+    "csv-parser": "^3.0.0",
+    "csv-writer": "^1.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
