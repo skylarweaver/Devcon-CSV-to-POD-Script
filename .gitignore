@@ -72,3 +72,5 @@ claude-context.json
 # LLM references
 spec.md
 pod/
+scratchpad.md
+spec.md
