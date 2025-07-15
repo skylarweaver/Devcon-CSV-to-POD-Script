@@ -137,10 +137,10 @@ function mapProductNameToId(productName: string, productMap: Record<string, stri
   return id;
 }
 
-async function createSignedPODs(attendees: AttendeeData[], signerPrivateKey: string, productMap: Record<string, string>): Promise<Array<{email: string, pod: string}>> {
+async function createSignedPODs(attendees: AttendeeData[], signerPrivateKey: string, productMap: Record<string, string>): Promise<Array<{email: string, pod: string, podUrlEncoded: string}>> {
   // Clear the log file at the start
   fs.writeFileSync(MISSING_PRODUCTS_LOG, '');
-  const results: Array<{email: string, pod: string}> = [];
+  const results: Array<{email: string, pod: string, podUrlEncoded: string}> = [];
   let rowIdx = 1;
   const HARDCODED_EVENT_ID = "5074edf5-f079-4099-b036-22223c0c6995";
   for (const attendee of attendees) {
@@ -155,9 +155,11 @@ async function createSignedPODs(attendees: AttendeeData[], signerPrivateKey: str
       const podEntries = createPODEntries(ticketData);
       const pod = POD.sign(podEntries, signerPrivateKey);
       const podJson = JSON.stringify(pod.toJSON());
+      const podUrlEncoded = encodeURIComponent(podJson);
       results.push({
         email: attendee.attendeeEmail,
-        pod: podJson
+        pod: podJson,
+        podUrlEncoded
       });
       console.log(`Created POD for ${attendee.attendeeEmail}`);
     } catch (error) {
@@ -168,12 +170,13 @@ async function createSignedPODs(attendees: AttendeeData[], signerPrivateKey: str
   return results;
 }
 
-async function writePODsToCSV(pods: Array<{email: string, pod: string}>, outputPath: string): Promise<void> {
+async function writePODsToCSV(pods: Array<{email: string, pod: string, podUrlEncoded: string}>, outputPath: string): Promise<void> {
   const csvWriter = createObjectCsvWriter({
     path: outputPath,
     header: [
       { id: 'email', title: 'EMAIL' },
-      { id: 'pod', title: 'POD' }
+      { id: 'pod', title: 'POD' },
+      { id: 'podUrlEncoded', title: 'POD_URLENCODED' }
     ]
   });
   
@@ -218,12 +221,12 @@ async function main() {
     console.error('  signer-private-key Private key for signing PODs (32 bytes, base64 encoded)');
     console.error('  output-csv-path    Path for the output CSV file with signed PODs');
     console.error('');
-    console.error('Input CSV should contain columns: attendeeName, attendeeEmail, ticketName, ticketSecret, ticketId, Product');
+    console.error('Output CSV will contain columns: EMAIL, POD, POD_URLENCODED');
     process.exit(1);
   }
   
   const [inputPath, signerPrivateKey, outputPath] = args;
-  const mappingPath = path.join(__dirname, '../devconSEAProductIDs/swag-removed-list.json');
+  const mappingPath = path.join(__dirname, './product-mapping.json');
 
   // Load product mapping
   let productMap: Record<string, string> = {};

@@ -1,3 +1,14 @@
+# Ignore all files in inputs/ except sample_input.csv
+inputs/*
+!inputs/
+!inputs/sample_input.csv
+!inputs/.gitkeep
+
+# Ignore all files in outputs/ but keep the folder tracked
+outputs/*
+!outputs/
+!outputs/.gitkeep
+
 # Dependencies
 node_modules/
 npm-debug.log*
