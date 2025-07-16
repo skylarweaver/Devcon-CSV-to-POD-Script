@@ -55,6 +55,18 @@ To verify the integrity of the output CSV from the converter:
    ```
 
 - Checks for required columns and missing fields
+- For each row, checks that the EMAIL, POD, and POD_URLENCODED fields are present and non-empty.
+- Required fields inside each POD JSON:
+   - productId
+   - eventId
+   - attendeeName
+   - attendeeEmail
+   - ticketName
+   - ticketSecret
+   - ticketId
+   - eventName
+   - timestampSigned
+   - timestampConsumed
 - Verifies POD structure and signature
 - Flags duplicate emails as warnings
 - Logs errors and warnings to the console

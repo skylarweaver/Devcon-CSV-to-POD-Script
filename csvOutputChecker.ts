@@ -9,8 +9,21 @@
 //
 // - Checks the output CSV from csv-to-pod-converter for required columns (EMAIL, POD, POD_URLENCODED)
 // - For each row, parses the POD JSON, checks for required fields, and verifies the POD signature
+// - For each row, checks that the EMAIL, POD, and POD_URLENCODED fields are present and non-empty.
 // - Flags duplicate emails as warnings
 // - Logs errors and warnings to the console and summarizes results
+//
+// Required fields inside each POD JSON:
+//   - productId
+//   - eventId
+//   - attendeeName
+//   - attendeeEmail
+//   - ticketName
+//   - ticketSecret
+//   - ticketId
+//   - eventName
+//   - timestampSigned
+//   - timestampConsumed
 //
 // Prerequisites:
 //   - Run `npm install` in this directory to install dependencies
