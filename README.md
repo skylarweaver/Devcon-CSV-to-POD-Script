@@ -40,3 +40,21 @@ The output CSV contains three columns:
 - Use the `POD_URLENCODED` column for safe transmission in URLs or QR codes.
 - See `sample_input.csv` for a template of the expected input format.
 - The product mapping file is now expected in the `csv-to-pod-converter/` folder (see below for details).
+
+## POD Output CSV Checker
+
+To verify the integrity of the output CSV from the converter:
+
+1. Install dependencies (if not already):
+   ```bash
+   npm install
+   ```
+2. Run the checker script:
+   ```bash
+   npx ts-node csvOutputChecker.ts outputs/new_pods.csv
+   ```
+
+- Checks for required columns and missing fields
+- Verifies POD structure and signature
+- Flags duplicate emails as warnings
+- Logs errors and warnings to the console
